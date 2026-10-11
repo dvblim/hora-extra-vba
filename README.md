@@ -33,8 +33,8 @@ Enquanto o jogo está ligado, as letras `W A S D E R` não digitam nas células.
 
 - **Turnos.** Cada passo gasta um turno e um pouco de pilha. Parado, nada acontece: dá para pensar.
 - **Lanterna e escuridão.** Só aparece o que a luz alcança em linha reta. O que você já viu fica como uma sombra; o resto é preto. Sem pilha, você enxerga uma casa à frente.
-- **A criatura.** Dorme até a luz voltar. Depois faz ronda, persegue quem vê e procura onde viu por último. Perseguindo, às vezes dá um bote de duas casas.
-- **Esconderijos.** Entre num armário quando ela não estiver olhando e ela passa direto.
+- **A criatura.** Dorme até a luz voltar. Depois faz ronda, persegue quem vê e procura onde viu por último. Ela enxerga um pouco menos longe que a sua lanterna, então você a vê antes de ser visto; perseguindo, às vezes dá um bote de duas casas.
+- **Esconderijos.** Entre num armário sem que ela tenha linha de visão para ele e ela passa direto.
 - **Sons.** O painel avisa quando há passos longe, perto ou muito perto.
 - **Enigmas encadeados.** Bilhetes, chave, fusível, quadro de luz e um cofre cujo código sai de um relatório com a fórmula quebrada (`#REF!`).
 
@@ -70,6 +70,10 @@ Quatro dos seis módulos não dependem do Office e rodam sem alteração no modo
 python tools/testar.py            # confere e gera as imagens de docs/
 python tools/testar.py --testar   # só confere (é o que o CI roda)
 ```
+
+## Gravar um vídeo
+
+`tools/Gravador.bas` é um módulo opcional: importe-o, ponha um `replay.txt` com a sequência de movimentos na pasta da planilha e execute `GravarReplay`. O Excel joga sozinho e salva uma imagem por turno na subpasta `quadros`.
 
 ## Roteiro
 

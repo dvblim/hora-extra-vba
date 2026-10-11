@@ -147,6 +147,12 @@ Private Sub Rotulo(ByVal lin As Long, ByVal legenda As String)
     End With
 End Sub
 
+' Tudo o que o jogo mostra: mapa, painel e papel. Usado para exportar imagens.
+Public Function AreaVisivel() As Range
+    If mAba Is Nothing Then Exit Function
+    Set AreaVisivel = mAba.Range(mAba.Cells(1, 1), mAba.Cells(LIN_PAPEL + LINHAS_PAPEL, COL_PAINEL))
+End Function
+
 ' A aba do jogo existe e e a que esta na frente?
 Public Function EmFoco() As Boolean
     On Error Resume Next

@@ -189,7 +189,8 @@ End Sub
 Private Sub Entrar()
     Escondido = False
     If Piso(JogadorX, JogadorY) = P_ARMARIO Then
-        If CriaturaEstado = C_PERSEGUE Then
+        ' So esconde se a criatura nao estiver vendo o armario neste instante.
+        If Enxerga(JogadorX, JogadorY) Then
             Mensagem = Ac("Voc\^e entra no arm\'ario, mas aquilo viu.")
         Else
             Escondido = True
@@ -347,7 +348,7 @@ Private Sub MoverCriatura()
     Select Case CriaturaEstado
         Case C_RONDA:    If Turnos Mod 2 = 0 Then passos = 1
         Case C_PROCURA:  passos = 1
-        Case C_PERSEGUE: If Turnos Mod 4 = 0 Then passos = 2 Else passos = 1
+        Case C_PERSEGUE: If Turnos Mod 8 = 0 Then passos = 2 Else passos = 1
     End Select
 
     For i = 1 To passos
@@ -388,13 +389,19 @@ Private Sub MoverCriatura()
     End If
 End Sub
 
-' A criatura enxerga o jogador? Precisa de linha reta livre, ate 9 casas.
-Private Function VeJogador() As Boolean
+' A criatura, acordada, enxerga esta casa? Precisa de linha reta livre, ate 5 casas.
+' E um pouco menos que o facho da lanterna (6): o jogador ve antes de ser visto.
+Private Function Enxerga(ByVal x As Long, ByVal y As Long) As Boolean
     Dim d2 As Long
 
+    If Not CriaturaLigada Or Not CriaturaAcordada Then Exit Function
+    d2 = (CriaX - x) * (CriaX - x) + (CriaY - y) * (CriaY - y)
+    If d2 <= 26 Then Enxerga = LinhaLivre(CriaX, CriaY, x, y)
+End Function
+
+Private Function VeJogador() As Boolean
     If Escondido Then Exit Function
-    d2 = (CriaX - JogadorX) * (CriaX - JogadorX) + (CriaY - JogadorY) * (CriaY - JogadorY)
-    If d2 <= 81 Then VeJogador = LinhaLivre(CriaX, CriaY, JogadorX, JogadorY)
+    VeJogador = Enxerga(JogadorX, JogadorY)
 End Function
 
 ' Encostou no jogador (na mesma casa ou ao lado)? Escondido no armario nao conta.
