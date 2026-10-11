@@ -1,0 +1,17 @@
+name: testes
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  vba:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar o LibreOffice
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-calc
+      - name: Os fontes VBA precisam ser ASCII (o editor do VBA importa ANSI, nao UTF-8)
+        run: "! grep -nP '[^\\x00-\\x7F]' src/*.bas tests/*.bas"
+      - name: Jogar a fuga inteira e testar a criatura
+        run: python3 tools/testar.py --testar

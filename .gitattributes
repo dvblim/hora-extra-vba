@@ -1,0 +1,6 @@
+# O editor do VBA so importa modulos corretamente com fim de linha do Windows.
+*.bas text eol=crlf
+*.py  text eol=lf
+*.yml text eol=lf
+*.png binary
+*.xlsm binary
